@@ -1,0 +1,85 @@
+<div class="task-list-container">
+  <div class="task-list-header">
+    <h2>My Tasks</h2>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="openAddTaskDialog()"
+      class="add-task-button"
+    >
+      <mat-icon>add</mat-icon>
+      Add Task
+    </button>
+  </div>
+
+  <mat-tab-group class="task-tabs">
+    <!-- Daily Tasks Tab -->
+    <mat-tab label="Daily Tasks">
+      <div class="tasks-content">
+        @if (dailyTasks$ | async; as dailyTasks) {
+          @if (dailyTasks.length === 0) {
+            <div class="empty-state">
+              <mat-icon class="empty-icon">event</mat-icon>
+              <h3>No daily tasks yet</h3>
+              <p>Create your first daily task to start earning rewards!</p>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="openAddTaskDialog()"
+              >
+                <mat-icon>add</mat-icon>
+                Add Daily Task
+              </button>
+            </div>
+          } @else {
+            <div class="tasks-grid">
+              @for (task of dailyTasks; track task.id) {
+                <app-task-item
+                  [task]="task"
+                  (taskDeleted)="onTaskDeleted($event)"
+                  (taskEdited)="onTaskEdited($event)"
+                  (taskToggled)="onTaskToggled($event)"
+                />
+              }
+            </div>
+          }
+        }
+      </div>
+    </mat-tab>
+
+    <!-- Weekly Tasks Tab -->
+    <mat-tab label="Weekly Tasks">
+      <div class="tasks-content">
+        @if (weeklyTasks$ | async; as weeklyTasks) {
+          @if (weeklyTasks.length === 0) {
+            <div class="empty-state">
+              <mat-icon class="empty-icon">calendar_today</mat-icon>
+              <h3>No weekly tasks yet</h3>
+              <p>Create your first weekly task to earn bigger rewards!</p>
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="openAddTaskDialog()"
+              >
+                <mat-icon>add</mat-icon>
+                Add Weekly Task
+              </button>
+            </div>
+          } @else {
+            <div class="tasks-grid">
+              @for (task of weeklyTasks; track task.id) {
+                <app-task-item
+                  [task]="task"
+                  (taskDeleted)="onTaskDeleted($event)"
+                  (taskEdited)="onTaskEdited($event)"
+                  (taskToggled)="onTaskToggled($event)"
+                />
+              }
+            </div>
+          }
+        }
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
