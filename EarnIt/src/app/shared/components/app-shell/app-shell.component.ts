@@ -1,7 +1,7 @@
-import { Component, signal, inject, OnInit } from '@angular/core';
+import { Component, signal, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,6 +31,7 @@ import { map } from 'rxjs/operators';
   styleUrl: './app-shell.component.scss',
 })
 export class AppShellComponent implements OnInit {
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   private readonly breakpointObserver = inject(BreakpointObserver);
   protected readonly sidebarOpen = signal(true);
 
@@ -42,12 +43,23 @@ export class AppShellComponent implements OnInit {
   ngOnInit(): void {
     // Close sidebar on mobile by default
     this.isHandset$.subscribe((isHandset) => {
-      this.sidebarOpen.set(!isHandset);
+      if (isHandset) {
+        this.sidebarOpen.set(false);
+      } else {
+        this.sidebarOpen.set(true);
+      }
     });
   }
 
   protected toggleSidebar(): void {
     this.sidebarOpen.update((value) => !value);
+    if (this.sidenav) {
+      if (this.sidebarOpen()) {
+        this.sidenav.open();
+      } else {
+        this.sidenav.close();
+      }
+    }
   }
 }
 

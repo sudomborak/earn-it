@@ -47,17 +47,25 @@ export class RewardProgressComponent {
 
   protected onEditReward(): void {
     // Future: Open dialog to edit reward
-    // For now, we'll just show an alert
+    // For now, we'll just show prompts
     const reward = this.rewardService.getReward();
-    if (reward) {
-      const newName = prompt('Enter new reward name:', reward.name);
-      const newPrice = prompt('Enter new reward price:', reward.price.toString());
-      if (newName && newPrice && !isNaN(parseFloat(newPrice))) {
-        this.rewardService.updateReward({
-          name: newName,
-          price: parseFloat(newPrice),
-        });
-      }
+    const currentName = reward?.name || '';
+    const currentPrice = reward?.price || 0;
+    
+    const newName = prompt('Enter reward name:', currentName);
+    if (newName === null) return; // User cancelled
+    
+    const newPriceStr = prompt('Enter reward price (€):', currentPrice.toString());
+    if (newPriceStr === null) return; // User cancelled
+    
+    const newPrice = parseFloat(newPriceStr);
+    if (!isNaN(newPrice) && newPrice > 0) {
+      this.rewardService.updateReward({
+        name: newName,
+        price: newPrice,
+      });
+    } else {
+      alert('Please enter a valid price greater than 0');
     }
   }
 }

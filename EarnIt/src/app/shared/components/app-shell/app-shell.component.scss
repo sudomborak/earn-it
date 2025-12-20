@@ -8,12 +8,18 @@
   width: 250px;
   background: white;
   box-shadow: var(--shadow-md);
+  transition: width 0.3s ease;
+
+  &.mat-drawer-side {
+    border-right: none;
+  }
 
   .sidenav-header {
     padding: var(--spacing-lg);
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
     color: white;
     text-align: center;
+    position: relative;
 
     .app-title {
       margin: 0;
@@ -25,6 +31,18 @@
       margin: var(--spacing-xs) 0 0 0;
       font-size: 0.875rem;
       opacity: 0.9;
+    }
+
+    .sidenav-toggle {
+      position: absolute;
+      top: var(--spacing-md);
+      right: var(--spacing-sm);
+      color: white;
+      background: rgba(255, 255, 255, 0.2);
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
     }
   }
 

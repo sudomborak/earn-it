@@ -4,11 +4,21 @@
     #sidenav
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="sidebarOpen()"
+    (openedChange)="sidebarOpen.set($event)"
     class="app-sidenav"
   >
     <div class="sidenav-header">
       <h2 class="app-title">EarnIt</h2>
       <p class="app-subtitle">Earn your rewards</p>
+      <button
+        mat-icon-button
+        (click)="toggleSidebar()"
+        class="sidenav-toggle"
+        aria-label="Toggle sidebar"
+        *ngIf="(isHandset$ | async) === false"
+      >
+        <mat-icon>{{ sidebarOpen() ? 'chevron_left' : 'chevron_right' }}</mat-icon>
+      </button>
     </div>
 
     <mat-nav-list>

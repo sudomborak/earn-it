@@ -14,13 +14,13 @@
     </mat-form-field>
 
     <!-- Type Field -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Task Type</mat-label>
+    <div class="form-field-wrapper">
+      <label class="form-label">Task Type</label>
       <mat-radio-group formControlName="type" class="radio-group">
         <mat-radio-button [value]="TaskType.Daily">Daily</mat-radio-button>
         <mat-radio-button [value]="TaskType.Weekly">Weekly</mat-radio-button>
       </mat-radio-group>
-    </mat-form-field>
+    </div>
 
     <!-- Value Field -->
     <mat-form-field appearance="outline" class="full-width">
