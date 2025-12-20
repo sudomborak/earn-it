@@ -1,0 +1,49 @@
+<mat-card
+  class="task-card"
+  [class.task-completed]="task.completed"
+  [@fadeIn]
+>
+  <mat-card-content class="task-content">
+    <div class="task-main">
+      <mat-checkbox
+        [checked]="task.completed"
+        (change)="onToggleComplete()"
+        color="primary"
+        class="task-checkbox"
+      >
+      </mat-checkbox>
+      <div class="task-info">
+        <h3 class="task-title" [class.completed]="task.completed">
+          {{ task.title }}
+        </h3>
+        <div class="task-meta">
+          <mat-chip class="task-type-chip" [class.daily]="task.type === TaskType.Daily">
+            {{ task.type === TaskType.Daily ? 'Daily' : 'Weekly' }}
+          </mat-chip>
+          <span class="task-value">{{ task.value }}€</span>
+        </div>
+      </div>
+    </div>
+    <div class="task-actions">
+      <button
+        mat-icon-button
+        (click)="onEdit()"
+        color="primary"
+        aria-label="Edit task"
+        class="action-button"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        (click)="onDelete()"
+        color="warn"
+        aria-label="Delete task"
+        class="action-button"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
+
