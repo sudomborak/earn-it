@@ -55,6 +55,49 @@ export class AddEditTaskDialogComponent implements OnInit {
     });
   }
 
+  /**
+   * Handle number input to remove leading zeros
+   * Example: "044" → "44", "05.50" → "5.50"
+   */
+  protected onValueInput(event: Event): void {
+    console.log('onValueInput', event);
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+
+    // Remove leading zeros (but keep single zero or "0.")
+    if (value.length > 1 && value.startsWith('0')) {
+      // Allow "0." while user is typing decimals
+      if (value === '0.') {
+        // Keep "0." as is
+        return;
+      }
+      
+      // Remove leading zero(s) - handles both "044" and "05.50"
+      // Match: one or more zeros at the start, but not if followed by nothing or just a decimal
+      value = value.replace(/^0+(?=\d)/, '');
+      
+      // If we removed everything or result is empty, keep "0"
+      if (value === '' || value === '.') {
+        value = '0';
+      }
+    }
+
+    // Update the input value and form control only if value changed
+    if (input.value !== value) {
+      const numValue = value === '' || value === '.' || value === '0.' ? 0 : parseFloat(value);
+      
+      // Update form control if it's a valid number (not intermediate states like "0.")
+      if (value !== '' && value !== '.' && value !== '0.' && !isNaN(numValue)) {
+        this.taskForm.patchValue({ value: numValue }, { emitEvent: false });
+      }
+      
+      // Update the input field display
+      setTimeout(() => {
+        input.value = value;
+      }, 0);
+    }
+  }
+
   protected onSubmit(): void {
     if (this.taskForm.valid) {
       this.dialogRef.close(this.taskForm.value);

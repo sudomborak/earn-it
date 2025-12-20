@@ -5,6 +5,10 @@
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-md);
   margin-bottom: var(--spacing-md);
+  height: 120px; // Fixed height for consistency
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 
   &:hover {
     box-shadow: var(--shadow-lg);
@@ -26,6 +30,9 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--spacing-md) !important;
+  flex: 1;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .task-main {

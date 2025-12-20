@@ -30,9 +30,9 @@
       <div class="progress-section">
         <div class="progress-info">
           <div class="amount-info">
-            <span class="earned-amount">€{{ reward.earned | number: '1.2-2' }}</span>
+            <span class="earned-amount">{{ reward.earned | number: '1.2-2' }}€</span>
             <span class="separator">/</span>
-            <span class="target-amount">€{{ reward.price | number: '1.2-2' }}</span>
+            <span class="target-amount">{{ reward.price | number: '1.2-2' }}€</span>
           </div>
           @if (progress$ | async; as progress) {
             <div class="progress-percentage">{{ progress }}%</div>
@@ -57,7 +57,7 @@
           @if (remainingAmount$ | async; as remaining) {
             <div class="remaining-info">
               <mat-icon class="info-icon">info</mat-icon>
-              <span>€{{ remaining | number: '1.2-2' }} remaining to reach your goal</span>
+              <span>{{ remaining | number: '1.2-2' }}€ remaining to reach your goal</span>
             </div>
           }
         }

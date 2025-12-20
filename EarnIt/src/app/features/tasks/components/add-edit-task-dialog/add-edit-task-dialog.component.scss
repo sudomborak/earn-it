@@ -17,12 +17,58 @@ mat-dialog-content {
 .task-form {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
 }
 
 .full-width {
   width: 100%;
+  margin-bottom: var(--spacing-md);
+
+  // Fix for mat-form-field outline appearance
+  ::ng-deep {
+    .mat-mdc-form-field {
+      // Add top padding to ensure label has space at the border
+      .mat-mdc-text-field-wrapper {
+        padding-top: 8px;
+      }
+
+      // Ensure label stays visible when field has value - use stronger selectors
+      .mdc-floating-label {
+        pointer-events: none;
+        opacity: 1 !important;
+        top: 20px !important; // Position label lower initially
+      }
+
+      // When field is focused, label should float up to border
+      &.mat-focused .mdc-floating-label,
+      &.mat-form-field-should-float .mdc-floating-label {
+        transform: translateY(-1.5rem) scale(0.75) !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        top: 0 !important; // Position at border when floating
+      }
+
+      // When field has value, ensure label floats to border
+      &.mat-mdc-form-field-has-value .mdc-floating-label {
+        transform: translateY(-1.5rem) scale(0.75) !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        top: 0 !important; // Position at border when has value
+      }
+
+
+      // Ensure label is always visible
+      .mdc-notched-outline {
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+          border-width: 1px;
+        }
+      }
+    }
+  }
 }
+
 
 .form-field-wrapper {
   margin-bottom: var(--spacing-md);
